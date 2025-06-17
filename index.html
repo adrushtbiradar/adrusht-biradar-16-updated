@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biradar ACCA Accounting System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a4f72;
+            --secondary: #2c8c99;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #e4edf5);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #0d3a5d);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            border-bottom: 2px solid white;
+        }
+        
+        main {
+            padding: 30px 0;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-header h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn i {
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d3a5d;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 79, 114, 0.2);
+        }
+        
+        .accounting-equation {
+            background: linear-gradient(135deg, #1a4f72, #2c8c99);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .accounting-equation span {
+            font-weight: 700;
+            color: #ffd43b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .debit-amount {
+            color: #2c8c99;
+            font-weight: 600;
+        }
+        
+        .credit-amount {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .trial-balance {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        
+        .trial-balance h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .trial-balance .total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .trial-balance .balanced {
+            color: var(--success);
+            margin-top: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .trial-balance .not-balanced {
+            color: var(--danger);
+            margin-top: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .tab-container {
+            margin-bottom: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            background-color: #e9ecef;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            background-color: white;
+            color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 -3px 6px rgba(0,0,0,0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: 0 5px 5px 5px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .financial-statement {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+        
+        .statement-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .statement-section {
+            margin-bottom: 20px;
+        }
+        
+        .statement-total {
+            font-weight: 700;
+            padding-top: 10px;
+            border-top: 2px solid var(--border);
+        }
+        
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        
+        .account-name {
+            flex: 2;
+        }
+        
+        .account-value {
+            flex: 1;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .credit {
+            color: #e74c3c;
+        }
+        
+        .debit {
+            color: #2c8c99;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ced4da;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.success {
+            background-color: var(--success);
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: var(--danger);
+            transform: translateX(0);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        .revaluation-form {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .cash-flow-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+        
+        /* Trading Account Styles */
+        .trading-account {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+        
+        .trading-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+        
+        .trading-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        
+        .trading-name {
+            flex: 2;
+        }
+        
+        .trading-value {
+            flex: 1;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        /* PDF Styles */
+        .pdf-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+        
+        .pdf-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 30px;
+        }
+        
+        .pdf-header h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .pdf-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .pdf-section {
+            margin-bottom: 30px;
+        }
+        
+        .pdf-section-title {
+            background-color: #f1f5f9;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .pdf-table th {
+            background-color: #e9ecef;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .pdf-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .pdf-total-row {
+            font-weight: 700;
+            background-color: #f8f9fa;
+        }
+        
+        .pdf-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .pdf-watermark {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 8rem;
+            transform: rotate(-45deg);
+            top: 40%;
+            left: 10%;
+            z-index: -1;
+            color: var(--primary);
+            font-weight: bold;
+            pointer-events: none;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block;
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+            table {
+                width: 100%;
+            }
+            .financial-statement, .trading-account {
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    <div class="logo-text">
+                        <h1>Biradar ACCA Accounting System</h1>
+                        <p>Professional Financial Management</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Dashboard</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="accounting-equation">
+            Assets = Liabilities + Equity
+        </div>
+        
+        <div class="tab-container">
+            <div class="tabs">
+                <div class="tab active" data-tab="journal">Journal Entries</div>
+                <div class="tab" data-tab="ledger">General Ledger</div>
+                <div class="tab" data-tab="trial">Trial Balance</div>
+                <div class="tab" data-tab="financial">Financial Statements</div>
+                <div class="tab" data-tab="trading">Trading Account</div>
+                <div class="tab" data-tab="cashflow">Cash Flow</div>
+                <div class="tab" data-tab="revaluation">Revaluation</div>
+            </div>
+            
+            <!-- Journal Entries Tab -->
+            <div class="tab-content active" id="journal-tab">
+                <div class="dashboard">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Create Journal Entry</h2>
+                        </div>
+                        
+                        <form id="journalForm" action="https://formspree.io/f/mdkzzvlz" method="POST">
+                            <div class="form-group">
+                                <label for="entryDate">Date</label>
+                                <input type="date" id="entryDate" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" id="description" name="description" class="form-control" placeholder="Enter transaction description" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="debitAccount">Debit Account</label>
+                                <select id="debitAccount" name="debitAccount" class="form-control" required>
+                                    <option value="">Select Account</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="accounts_receivable">Accounts Receivable</option>
+                                    <option value="inventory">Inventory</option>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="cogs">Cost of Goods Sold</option>
+                                    <option value="salaries">Salaries Expense</option>
+                                    <option value="rent">Rent Expense</option>
+                                    <option value="utilities">Utilities Expense</option>
+                                    <option value="depreciation">Depreciation Expense</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="debitAmount">Debit Amount (£)</label>
+                                <input type="number" id="debitAmount" name="debitAmount" class="form-control" placeholder="Enter amount" min="0.01" step="0.01" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="creditAccount">Credit Account</label>
+                                <select id="creditAccount" name="creditAccount" class="form-control" required>
+                                    <option value="">Select Account</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="accounts_payable">Accounts Payable</option>
+                                    <option value="loans_payable">Loans Payable</option>
+                                    <option value="equity">Owner's Equity</option>
+                                    <option value="revenue">Revenue</option>
+                                    <option value="revaluation_reserve">Revaluation Reserve</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="creditAmount">Credit Amount (£)</label>
+                                <input type="number" id="creditAmount" name="creditAmount" class="form-control" placeholder="Enter amount" min="0.01" step="0.01" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Record Journal Entry
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Journal Entries</h2>
+                            <button class="btn btn-outline" id="clearJournal">
+                                <i class="fas fa-trash"></i> Clear All
+                            </button>
+                        </div>
+                        
+                        <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Debit Account</th>
+                                        <th>Credit Account</th>
+                                        <th>Debit (£)</th>
+                                        <th>Credit (£)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="journalEntries">
+                                    <tr class="empty-state-row">
+                                        <td colspan="6" class="empty-state">
+                                            <i class="fas fa-file-alt"></i>
+                                            <h3>No Journal Entries</h3>
+                                            <p>Add your first journal entry to get started</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- General Ledger Tab -->
+            <div class="tab-content" id="ledger-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>General Ledger</h2>
+                        <div class="form-group" style="margin-bottom: 0; width: 300px;">
+                            <select class="form-control" id="ledgerAccountFilter">
+                                <option value="all">All Accounts</option>
+                                <option value="cash">Cash</option>
+                                <option value="accounts_receivable">Accounts Receivable</option>
+                                <option value="inventory">Inventory</option>
+                                <option value="equipment">Equipment</option>
+                                <option value="accounts_payable">Accounts Payable</option>
+                                <option value="loans_payable">Loans Payable</option>
+                                <option value="equity">Owner's Equity</option>
+                                <option value="revenue">Revenue</option>
+                                <option value="cogs">Cost of Goods Sold</option>
+                                <option value="salaries">Salaries Expense</option>
+                                <option value="rent">Rent Expense</option>
+                                <option value="utilities">Utilities Expense</option>
+                                <option value="revaluation_reserve">Revaluation Reserve</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                        <table id="ledgerTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Account</th>
+                                    <th>Description</th>
+                                    <th>Debit (£)</th>
+                                    <th>Credit (£</th>
+                                    <th>Balance (£)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="empty-state-row">
+                                    <td colspan="6" class="empty-state">
+                                        <i class="fas fa-book"></i>
+                                        <h3>No Ledger Entries</h3>
+                                        <p>Add journal entries to populate the ledger</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printLedger">
+                            <i class="fas fa-print"></i> Print Ledger
+                        </button>
+                        <button class="btn btn-success" id="pdfLedger">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trial Balance Tab -->
+            <div class="tab-content" id="trial-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Trial Balance</h2>
+                        <div class="btn-group">
+                            <button class="btn btn-success" id="calculateTrialBalance">
+                                <i class="fas fa-calculator"></i> Calculate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="trial-balance" id="trialBalanceContent">
+                        <h3 id="trialBalanceDate">As of </h3>
+                        
+                        <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+                            <table id="trialBalanceTable">
+                                <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Debit (£)</th>
+                                        <th>Credit (£)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="empty-state-row">
+                                        <td colspan="3" class="empty-state">
+                                            <i class="fas fa-balance-scale"></i>
+                                            <h3>No Trial Balance Data</h3>
+                                            <p>Add journal entries and click Calculate to generate trial balance</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="total">
+                            <span>Total</span>
+                            <span id="trialTotal">£0.00 | £0.00</span>
+                        </div>
+                        
+                        <div class="balanced" id="balanceStatus">
+                            <i class="fas fa-check-circle"></i> Trial Balance is Balanced
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printTrialBalance">
+                            <i class="fas fa-print"></i> Print Trial Balance
+                        </button>
+                        <button class="btn btn-success" id="pdfTrialBalance">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Financial Statements Tab -->
+            <div class="tab-content" id="financial-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Financial Statements</h2>
+                        <div>
+                            <button class="btn btn-success" id="generateFinancials">
+                                <i class="fas fa-file-invoice-dollar"></i> Generate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="incomeStatementContainer">
+                        <div class="financial-statement" id="incomeStatement">
+                            <div class="statement-header">
+                                <h2>Profit & Loss Statement</h2>
+                                <p id="incomeStatementDate">For the period ended </p>
+                            </div>
+                            
+                            <div class="empty-state">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>No Profit & Loss Data</h3>
+                                <p>Generate financial statements to view Profit & Loss</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="balanceSheetContainer">
+                        <div class="financial-statement" id="balanceSheet">
+                            <div class="statement-header">
+                                <h2>Balance Sheet</h2>
+                                <p id="balanceSheetDate">As of </p>
+                            </div>
+                            
+                            <div class="empty-state">
+                                <i class="fas fa-balance-scale"></i>
+                                <h3>No Balance Sheet Data</h3>
+                                <p>Generate financial statements to view balance sheet</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printFinancials">
+                            <i class="fas fa-print"></i> Print Financials
+                        </button>
+                        <button class="btn btn-success" id="pdfFinancials">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trading Account Tab -->
+            <div class="tab-content" id="trading-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Trading Account</h2>
+                        <div>
+                            <button class="btn btn-success" id="generateTrading">
+                                <i class="fas fa-chart-bar"></i> Generate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="tradingAccountContainer">
+                        <div class="trading-account">
+                            <div class="trading-header">
+                                <h2>Trading Account</h2>
+                                <p id="tradingAccountDate">For the period ended </p>
+                            </div>
+                            
+                            <div class="empty-state">
+                                <i class="fas fa-balance-scale"></i>
+                                <h3>No Trading Account Data</h3>
+                                <p>Generate trading account to view gross profit</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printTrading">
+                            <i class="fas fa-print"></i> Print Trading
+                        </button>
+                        <button class="btn btn-success" id="pdfTrading">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cash Flow Tab -->
+            <div class="tab-content" id="cashflow-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Cash Flow Statement</h2>
+                        <div>
+                            <button class="btn btn-success" id="generateCashFlow">
+                                <i class="fas fa-money-bill-wave"></i> Generate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="cashFlowContainer">
+                        <div class="financial-statement">
+                            <div class="statement-header">
+                                <h2>Cash Flow Statement</h2>
+                                <p id="cashFlowDate">For the period ended </p>
+                            </div>
+                            
+                            <div class="empty-state">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>No Cash Flow Data</h3>
+                                <p>Generate cash flow statement to view cash movements</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printCashFlow">
+                            <i class="fas fa-print"></i> Print Cash Flow
+                        </button>
+                        <button class="btn btn-success" id="pdfCashFlow">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Revaluation Tab -->
+            <div class="tab-content" id="revaluation-tab">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Revaluation Account</h2>
+                    </div>
+                    
+                    <div class="revaluation-form">
+                        <form id="revaluationForm">
+                            <div class="form-group">
+                                <label for="revalDate">Date</label>
+                                <input type="date" id="revalDate" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="assetAccount">Asset Account</label>
+                                <select id="assetAccount" class="form-control" required>
+                                    <option value="">Select Asset</option>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="inventory">Inventory</option>
+                                    <option value="land">Land</option>
+                                    <option value="buildings">Buildings</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="revalDescription">Description</label>
+                                <input type="text" id="revalDescription" class="form-control" placeholder="Enter revaluation description" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="currentValue">Current Value (£)</label>
+                                <input type="number" id="currentValue" class="form-control" placeholder="Current value" min="0.01" step="0.01" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newValue">New Value (£)</label>
+                                <input type="number" id="newValue" class="form-control" placeholder="New value" min="0.01" step="0.01" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i> Record Revaluation
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                        <table id="revaluationTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Asset</th>
+                                    <th>Description</th>
+                                    <th>Previous Value</th>
+                                    <th>New Value</th>
+                                    <th>Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="empty-state-row">
+                                    <td colspan="6" class="empty-state">
+                                        <i class="fas fa-balance-scale"></i>
+                                        <h3>No Revaluation Entries</h3>
+                                        <p>Record asset revaluations to see them here</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons no-print">
+                        <button class="btn btn-info" id="printRevaluation">
+                            <i class="fas fa-print"></i> Print Revaluation
+                        </button>
+                        <button class="btn btn-success" id="pdfRevaluation">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-calculator"></i> Biradar ACCA Accounting System
+                </div>
+                <div class="copyright">
+                    © 2025 Biradar Professional Accounting System. Compliant with ACCA rules and standards.
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Print Templates (Hidden until needed) -->
+    <div id="printTemplates" style="display: none;">
+        <div id="printLedgerTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - General Ledger</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Account</th>
+                            <th>Description</th>
+                            <th>Debit (£)</th>
+                            <th>Credit (£)</th>
+                            <th>Balance (£)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="printLedgerBody"></tbody>
+                </table>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="ledgerPrintDate"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="printTrialBalanceTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - Trial Balance</div>
+                <div id="printTrialBalanceContent"></div>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="trialPrintDate"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="printFinancialsTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - Financial Statements</div>
+                <div id="printIncomeStatement"></div>
+                <div id="printBalanceSheet"></div>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="financialsPrintDate"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="printCashFlowTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - Cash Flow Statement</div>
+                <div id="printCashFlowContent"></div>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="cashFlowPrintDate"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="printRevaluationTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - Revaluation Account</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Asset</th>
+                            <th>Description</th>
+                            <th>Previous Value</th>
+                            <th>New Value</th>
+                            <th>Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody id="printRevaluationBody"></tbody>
+                </table>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="revaluationPrintDate"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="printTradingTemplate">
+            <div class="print-section">
+                <div class="print-only">Biradar ACCA Accounting System - Trading Account</div>
+                <div id="printTradingContent"></div>
+                <div style="text-align: center; margin-top: 20px; font-size: 0.8rem;">
+                    Printed on <span id="tradingPrintDate"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PDF Preview Container (Hidden) -->
+    <div id="pdfPreviewContainer" style="display: none;">
+        <div class="pdf-container">
+            <div class="pdf-watermark">Biradar ACCA</div>
+            <div class="pdf-header">
+                <h1>Trading Account</h1>
+                <p id="pdfTradingDate">For the period ended </p>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">Trading Account Details</div>
+                <table class="pdf-table">
+                    <thead>
+                        <tr>
+                            <th>Particulars</th>
+                            <th>Amount (£)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfTradingBody"></tbody>
+                </table>
+            </div>
+            
+            <div class="pdf-section">
+                <div class="pdf-section-title">Financial Summary</div>
+                <table class="pdf-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount (£)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfSummaryBody"></tbody>
+                </table>
+            </div>
+            
+            <div class="pdf-footer">
+                <p>Generated by Biradar ACCA Accounting System | Compliant with ACCA Standards</p>
+                <p>© 2025 Biradar Professional Services. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize data storage
+        let journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+        let revaluationEntries = JSON.parse(localStorage.getItem('revaluationEntries')) || [];
+        let accounts = {
+            cash: { name: 'Cash', type: 'Asset', balance: 0 },
+            accounts_receivable: { name: 'Accounts Receivable', type: 'Asset', balance: 0 },
+            inventory: { name: 'Inventory', type: 'Asset', balance: 0 },
+            equipment: { name: 'Equipment', type: 'Asset', balance: 0 },
+            accounts_payable: { name: 'Accounts Payable', type: 'Liability', balance: 0 },
+            loans_payable: { name: 'Loans Payable', type: 'Liability', balance: 0 },
+            equity: { name: "Owner's Equity", type: 'Equity', balance: 0 },
+            revenue: { name: 'Revenue', type: 'Revenue', balance: 0 },
+            cogs: { name: 'Cost of Goods Sold', type: 'Expense', balance: 0 },
+            salaries: { name: 'Salaries Expense', type: 'Expense', balance: 0 },
+            rent: { name: 'Rent Expense', type: 'Expense', balance: 0 },
+            utilities: { name: 'Utilities Expense', type: 'Expense', balance: 0 },
+            depreciation: { name: 'Depreciation Expense', type: 'Expense', balance: 0 },
+            revaluation_reserve: { name: 'Revaluation Reserve', type: 'Equity', balance: 0 }
+        };
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('journalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('entryDate').value;
+            const description = document.getElementById('description').value;
+            const debitAccount = document.getElementById('debitAccount').value;
+            const debitAmount = parseFloat(document.getElementById('debitAmount').value);
+            const creditAccount = document.getElementById('creditAccount').value;
+            const creditAmount = parseFloat(document.getElementById('creditAmount').value);
+            
+            // Validate amounts
+            if (!date || !description || !debitAccount || !debitAmount || !creditAccount || !creditAmount) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (debitAmount !== creditAmount) {
+                showNotification('Debit and Credit amounts must be equal for each transaction', 'error');
+                return;
+            }
+            
+            // Create journal entry
+            const entry = {
+                id: Date.now(),
+                date: date,
+                description: description,
+                debitAccount: debitAccount,
+                debitAmount: debitAmount,
+                creditAccount: creditAccount,
+                creditAmount: creditAmount
+            };
+            
+            // Add to journal entries
+            journalEntries.push(entry);
+            localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+            
+            // Update UI
+            updateJournalEntriesTable();
+            updateLedgerTable();
+            
+            // Send to Formspree
+            const formData = new FormData(this);
+            formData.append('system', 'Biradars ACCA Accounting System');
+            
+            fetch('https://formspree.io/f/mdkzzvlz', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    showNotification('Journal entry saved and submitted to Formspree!', 'success');
+                } else {
+                    showNotification('Error submitting to Formspree. Data saved locally.', 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('Error submitting to Formspree. Data saved locally.', 'error');
+            });
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Revaluation form submission
+        document.getElementById('revaluationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('revalDate').value;
+            const asset = document.getElementById('assetAccount').value;
+            const description = document.getElementById('revalDescription').value;
+            const currentValue = parseFloat(document.getElementById('currentValue').value);
+            const newValue = parseFloat(document.getElementById('newValue').value);
+            
+            if (!date || !asset || !description || !currentValue || !newValue) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+            
+            const difference = newValue - currentValue;
+            
+            const entry = {
+                id: Date.now(),
+                date: date,
+                asset: asset,
+                description: description,
+                currentValue: currentValue,
+                newValue: newValue,
+                difference: difference
+            };
+            
+            revaluationEntries.push(entry);
+            localStorage.setItem('revaluationEntries', JSON.stringify(revaluationEntries));
+            
+            // Update UI
+            updateRevaluationTable();
+            
+            // Create journal entry for revaluation
+            if (difference !== 0) {
+                const journalEntry = {
+                    id: Date.now() + 1,
+                    date: date,
+                    description: `Revaluation of ${asset}`,
+                    debitAccount: difference > 0 ? asset : 'revaluation_reserve',
+                    debitAmount: Math.abs(difference),
+                    creditAccount: difference > 0 ? 'revaluation_reserve' : asset,
+                    creditAmount: Math.abs(difference)
+                };
+                
+                journalEntries.push(journalEntry);
+                localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                updateJournalEntriesTable();
+                updateLedgerTable();
+            }
+            
+            showNotification('Revaluation recorded successfully!', 'success');
+            this.reset();
+        });
+        
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(200%)';
+                setTimeout(() => {
+                    notification.className = 'notification';
+                    notification.style.transform = 'translateX(0)';
+                }, 300);
+            }, 3000);
+        }
+        
+        // Clear journal entries
+        document.getElementById('clearJournal').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all journal entries? This action cannot be undone.')) {
+                journalEntries = [];
+                localStorage.removeItem('journalEntries');
+                updateJournalEntriesTable();
+                document.getElementById('ledgerTable').querySelector('tbody').innerHTML = '';
+                document.getElementById('trialBalanceTable').querySelector('tbody').innerHTML = '';
+                document.getElementById('incomeStatementContainer').innerHTML = '';
+                document.getElementById('balanceSheetContainer').innerHTML = '';
+                document.getElementById('cashFlowContainer').innerHTML = '';
+                document.getElementById('tradingAccountContainer').innerHTML = '';
+                showNotification('All journal entries cleared', 'success');
+            }
+        });
+        
+        // Calculate trial balance
+        document.getElementById('calculateTrialBalance').addEventListener('click', function() {
+            calculateTrialBalance();
+            showNotification('Trial balance calculated successfully', 'success');
+        });
+        
+        // Generate financial statements
+        document.getElementById('generateFinancials').addEventListener('click', function() {
+            generateFinancialStatements();
+            showNotification('Financial statements generated successfully', 'success');
+        });
+        
+        // Generate trading account
+        document.getElementById('generateTrading').addEventListener('click', function() {
+            generateTradingAccount();
+            showNotification('Trading account generated successfully', 'success');
+        });
+        
+        // Generate cash flow statement
+        document.getElementById('generateCashFlow').addEventListener('click', function() {
+            generateCashFlowStatement();
+            showNotification('Cash flow statement generated successfully', 'success');
+        });
+        
+        // Ledger account filter
+        document.getElementById('ledgerAccountFilter').addEventListener('change', function() {
+            updateLedgerTable();
+        });
+        
+        // Print and PDF functionality
+        document.getElementById('printLedger').addEventListener('click', printLedger);
+        document.getElementById('pdfLedger').addEventListener('click', pdfLedger);
+        document.getElementById('printTrialBalance').addEventListener('click', printTrialBalance);
+        document.getElementById('pdfTrialBalance').addEventListener('click', pdfTrialBalance);
+        document.getElementById('printFinancials').addEventListener('click', printFinancials);
+        document.getElementById('pdfFinancials').addEventListener('click', pdfFinancials);
+        document.getElementById('printCashFlow').addEventListener('click', printCashFlow);
+        document.getElementById('pdfCashFlow').addEventListener('click', pdfCashFlow);
+        document.getElementById('printRevaluation').addEventListener('click', printRevaluation);
+        document.getElementById('pdfRevaluation').addEventListener('click', pdfRevaluation);
+        document.getElementById('printTrading').addEventListener('click', printTrading);
+        document.getElementById('pdfTrading').addEventListener('click', pdfTrading);
+        
+        function printLedger() {
+            const ledgerContent = document.getElementById('ledgerTable').cloneNode(true);
+            const printBody = document.getElementById('printLedgerBody');
+            printBody.innerHTML = ledgerContent.querySelector('tbody').innerHTML;
+            
+            // Update print date
+            document.getElementById('ledgerPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printLedgerTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfLedger() {
+            const element = document.getElementById('ledgerTable').parentElement.parentElement;
+            const opt = {
+                margin: 10,
+                filename: 'biradar-ledger-report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        function printTrialBalance() {
+            const trialContent = document.getElementById('trialBalanceContent').cloneNode(true);
+            const printContent = document.getElementById('printTrialBalanceContent');
+            printContent.innerHTML = trialContent.innerHTML;
+            
+            // Update print date
+            document.getElementById('trialPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printTrialBalanceTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfTrialBalance() {
+            const element = document.getElementById('trialBalanceContent');
+            const opt = {
+                margin: 10,
+                filename: 'biradar-trial-balance.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        function printFinancials() {
+            const incomeStatement = document.getElementById('incomeStatement').cloneNode(true);
+            const balanceSheet = document.getElementById('balanceSheet').cloneNode(true);
+            
+            document.getElementById('printIncomeStatement').innerHTML = incomeStatement.innerHTML;
+            document.getElementById('printBalanceSheet').innerHTML = balanceSheet.innerHTML;
+            
+            // Update print date
+            document.getElementById('financialsPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printFinancialsTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfFinancials() {
+            const element = document.getElementById('financial-tab');
+            const opt = {
+                margin: 10,
+                filename: 'biradar-financial-statements.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        function printCashFlow() {
+            const cashFlowContent = document.getElementById('cashFlowContainer').cloneNode(true);
+            const printContent = document.getElementById('printCashFlowContent');
+            printContent.innerHTML = cashFlowContent.innerHTML;
+            
+            // Update print date
+            document.getElementById('cashFlowPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printCashFlowTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfCashFlow() {
+            const element = document.getElementById('cashFlowContainer');
+            const opt = {
+                margin: 10,
+                filename: 'biradar-cash-flow-statement.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        function printRevaluation() {
+            const revaluationContent = document.getElementById('revaluationTable').cloneNode(true);
+            const printBody = document.getElementById('printRevaluationBody');
+            printBody.innerHTML = revaluationContent.querySelector('tbody').innerHTML;
+            
+            // Update print date
+            document.getElementById('revaluationPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printRevaluationTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfRevaluation() {
+            const element = document.getElementById('revaluationTable');
+            const opt = {
+                margin: 10,
+                filename: 'biradar-revaluation-report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
+        function printTrading() {
+            const tradingContent = document.getElementById('tradingAccountContainer').cloneNode(true);
+            const printContent = document.getElementById('printTradingContent');
+            printContent.innerHTML = tradingContent.innerHTML;
+            
+            // Update print date
+            document.getElementById('tradingPrintDate').textContent = new Date().toLocaleString();
+            
+            // Prepare for printing
+            const printTemplate = document.getElementById('printTradingTemplate').cloneNode(true);
+            printTemplate.style.display = 'block';
+            document.body.appendChild(printTemplate);
+            
+            // Print
+            window.print();
+            
+            // Clean up
+            document.body.removeChild(printTemplate);
+        }
+        
+        function pdfTrading() {
+            // Create PDF preview
+            const pdfPreview = document.getElementById('pdfPreviewContainer').cloneNode(true);
+            pdfPreview.style.display = 'block';
+            pdfPreview.style.position = 'absolute';
+            pdfPreview.style.left = '-9999px';
+            document.body.appendChild(pdfPreview);
+            
+            // Update content
+            const tradingDate = document.getElementById('tradingAccountDate').textContent;
+            document.getElementById('pdfTradingDate').textContent = tradingDate;
+            
+            // Populate trading account data
+            const tradingBody = document.getElementById('pdfTradingBody');
+            tradingBody.innerHTML = `
+                <tr>
+                    <td>Sales</td>
+                    <td>${accounts.revenue.balance.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Less: Cost of Goods Sold</td>
+                    <td>(${accounts.cogs.balance.toFixed(2)})</td>
+                </tr>
+                <tr class="pdf-total-row">
+                    <td>Gross Profit</td>
+                    <td>${(accounts.revenue.balance - accounts.cogs.balance).toFixed(2)}</td>
+                </tr>
+            `;
+            
+            // Populate summary data
+            const summaryBody = document.getElementById('pdfSummaryBody');
+            summaryBody.innerHTML = `
+                <tr>
+                    <td>Opening Inventory</td>
+                    <td>${(accounts.inventory.balance * 0.3).toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Closing Inventory</td>
+                    <td>${accounts.inventory.balance.toFixed(2)}</td>
+                </tr>
+                <tr class="pdf-total-row">
+                    <td>Net Profit</td>
+                    <td>${calculateNetProfit().toFixed(2)}</td>
+                </tr>
+            `;
+            
+            // Generate PDF
+            const opt = {
+                margin: 10,
+                filename: 'biradar-trading-account.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(pdfPreview).save();
+            
+            // Clean up
+            document.body.removeChild(pdfPreview);
+        }
+        
+        // Update journal entries table
+        function updateJournalEntriesTable() {
+            const tableBody = document.getElementById('journalEntries');
+            
+            if (journalEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-file-alt"></i>
+                            <h3>No Journal Entries</h3>
+                            <p>Add your first journal entry to get started</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Remove empty state row if present
+            const emptyRow = tableBody.querySelector('.empty-state-row');
+            if (emptyRow) emptyRow.remove();
+            
+            // Sort entries by date (newest first)
+            const sortedEntries = [...journalEntries].sort((a, b) => 
+                new Date(b.date) - new Date(a.date));
+            
+            // Add entries to table
+            tableBody.innerHTML = '';
+            sortedEntries.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${entry.description}</td>
+                    <td>${accounts[entry.debitAccount]?.name || entry.debitAccount}</td>
+                    <td>${accounts[entry.creditAccount]?.name || entry.creditAccount}</td>
+                    <td class="debit-amount">${entry.debitAmount.toFixed(2)}</td>
+                    <td class="credit-amount">${entry.creditAmount.toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Update ledger table
+        function updateLedgerTable() {
+            const tableBody = document.getElementById('ledgerTable').querySelector('tbody');
+            const selectedAccount = document.getElementById('ledgerAccountFilter').value;
+            
+            if (journalEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-book"></i>
+                            <h3>No Ledger Entries</h3>
+                            <p>Add journal entries to populate the ledger</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Reset account balances
+            Object.keys(accounts).forEach(account => {
+                accounts[account].balance = 0;
+            });
+            
+            // Process journal entries to calculate ledger balances
+            const ledgerEntries = [];
+            journalEntries.forEach(entry => {
+                // Debit entry
+                ledgerEntries.push({
+                    date: entry.date,
+                    account: entry.debitAccount,
+                    description: entry.description,
+                    debit: entry.debitAmount,
+                    credit: 0
+                });
+                
+                // Credit entry
+                ledgerEntries.push({
+                    date: entry.date,
+                    account: entry.creditAccount,
+                    description: entry.description,
+                    debit: 0,
+                    credit: entry.creditAmount
+                });
+            });
+            
+            // Sort ledger entries by date
+            const sortedEntries = [...ledgerEntries].sort((a, b) => 
+                new Date(a.date) - new Date(b.date));
+            
+            // Filter entries if an account is selected
+            const filteredEntries = selectedAccount === 'all' 
+                ? sortedEntries 
+                : sortedEntries.filter(entry => entry.account === selectedAccount);
+            
+            if (filteredEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-book"></i>
+                            <h3>No Entries for Selected Account</h3>
+                            <p>No journal entries exist for this account</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Add entries to table
+            tableBody.innerHTML = '';
+            filteredEntries.forEach(entry => {
+                // Update account balance
+                const account = accounts[entry.account];
+                if (!account) return;
+                
+                if (account.type === 'Asset' || account.type === 'Expense') {
+                    account.balance += entry.debit - entry.credit;
+                } else {
+                    account.balance += entry.credit - entry.debit;
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${account.name}</td>
+                    <td>${entry.description}</td>
+                    <td class="${entry.debit > 0 ? 'debit-amount' : ''}">${entry.debit > 0 ? entry.debit.toFixed(2) : ''}</td>
+                    <td class="${entry.credit > 0 ? 'credit-amount' : ''}">${entry.credit > 0 ? entry.credit.toFixed(2) : ''}</td>
+                    <td>${account.balance.toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Update revaluation table
+        function updateRevaluationTable() {
+            const tableBody = document.getElementById('revaluationTable').querySelector('tbody');
+            
+            if (revaluationEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-balance-scale"></i>
+                            <h3>No Revaluation Entries</h3>
+                            <p>Record asset revaluations to see them here</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Remove empty state row if present
+            const emptyRow = tableBody.querySelector('.empty-state-row');
+            if (emptyRow) emptyRow.remove();
+            
+            // Sort entries by date (newest first)
+            const sortedEntries = [...revaluationEntries].sort((a, b) => 
+                new Date(b.date) - new Date(a.date));
+            
+            // Add entries to table
+            tableBody.innerHTML = '';
+            sortedEntries.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${entry.asset}</td>
+                    <td>${entry.description}</td>
+                    <td>${entry.currentValue.toFixed(2)}</td>
+                    <td>${entry.newValue.toFixed(2)}</td>
+                    <td class="${entry.difference >= 0 ? 'debit-amount' : 'credit-amount'}">${entry.difference.toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Calculate trial balance
+        function calculateTrialBalance() {
+            const tableBody = document.getElementById('trialBalanceTable').querySelector('tbody');
+            const trialBalanceDate = document.getElementById('trialBalanceDate');
+            const trialTotal = document.getElementById('trialTotal');
+            const balanceStatus = document.getElementById('balanceStatus');
+            
+            if (journalEntries.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="3" class="empty-state">
+                            <i class="fas fa-balance-scale"></i>
+                            <h3>No Trial Balance Data</h3>
+                            <p>Add journal entries to generate trial balance</p>
+                        </td>
+                    </tr>
+                `;
+                trialBalanceDate.textContent = "As of ";
+                trialTotal.textContent = "£0.00 | £0.00";
+                balanceStatus.innerHTML = '<i class="fas fa-check-circle"></i> Trial Balance is Balanced';
+                return;
+            }
+            
+            // Reset account balances
+            Object.keys(accounts).forEach(account => {
+                accounts[account].balance = 0;
+            });
+            
+            // Process journal entries to calculate account balances
+            journalEntries.forEach(entry => {
+                // Update debit account
+                if (accounts[entry.debitAccount]) {
+                    accounts[entry.debitAccount].balance += entry.debitAmount;
+                }
+                
+                // Update credit account
+                if (accounts[entry.creditAccount]) {
+                    accounts[entry.creditAccount].balance += entry.creditAmount;
+                }
+            });
+            
+            // Prepare trial balance data
+            let totalDebit = 0;
+            let totalCredit = 0;
+            const trialData = [];
+            
+            Object.keys(accounts).forEach(accountKey => {
+                const account = accounts[accountKey];
+                
+                if (account.balance > 0) {
+                    if (account.type === 'Asset' || account.type === 'Expense') {
+                        totalDebit += account.balance;
+                        trialData.push({
+                            account: account.name,
+                            debit: account.balance,
+                            credit: 0
+                        });
+                    } else {
+                        totalCredit += account.balance;
+                        trialData.push({
+                            account: account.name,
+                            debit: 0,
+                            credit: account.balance
+                        });
+                    }
+                }
+            });
+            
+            // Sort by account name
+            trialData.sort((a, b) => a.account.localeCompare(b.account));
+            
+            // Add entries to table
+            tableBody.innerHTML = '';
+            trialData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.account}</td>
+                    <td class="debit-amount">${item.debit > 0 ? item.debit.toFixed(2) : ''}</td>
+                    <td class="credit-amount">${item.credit > 0 ? item.credit.toFixed(2) : ''}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add totals row
+            const totalRow = document.createElement('tr');
+            totalRow.style.fontWeight = 'bold';
+            totalRow.innerHTML = `
+                <td>Total</td>
+                <td class="debit-amount">${totalDebit.toFixed(2)}</td>
+                <td class="credit-amount">${totalCredit.toFixed(2)}</td>
+            `;
+            tableBody.appendChild(totalRow);
+            
+            // Update trial balance info
+            const lastEntryDate = journalEntries.reduce((latest, entry) => 
+                new Date(entry.date) > new Date(latest) ? entry.date : latest, 
+                journalEntries[0].date
+            );
+            
+            trialBalanceDate.textContent = `As of ${lastEntryDate}`;
+            trialTotal.textContent = `£${totalDebit.toFixed(2)} | £${totalCredit.toFixed(2)}`;
+            
+            if (Math.abs(totalDebit - totalCredit) < 0.01) {
+                balanceStatus.innerHTML = '<i class="fas fa-check-circle"></i> Trial Balance is Balanced';
+                balanceStatus.className = 'balanced';
+            } else {
+                balanceStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Trial Balance is NOT Balanced';
+                balanceStatus.className = 'not-balanced';
+            }
+        }
+        
+        // Calculate net profit
+        function calculateNetProfit() {
+            const revenue = accounts.revenue.balance;
+            const cogs = accounts.cogs.balance;
+            const salariesExpense = accounts.salaries.balance;
+            const rentExpense = accounts.rent.balance;
+            const utilitiesExpense = accounts.utilities.balance;
+            const depreciationExpense = accounts.depreciation.balance;
+            
+            const grossProfit = revenue - cogs;
+            const totalExpenses = salariesExpense + rentExpense + utilitiesExpense + depreciationExpense;
+            
+            return grossProfit - totalExpenses;
+        }
+        
+        // Generate financial statements
+        function generateFinancialStatements() {
+            // Reset account balances
+            Object.keys(accounts).forEach(account => {
+                accounts[account].balance = 0;
+            });
+            
+            // Process journal entries to calculate account balances
+            journalEntries.forEach(entry => {
+                // Update debit account
+                if (accounts[entry.debitAccount]) {
+                    accounts[entry.debitAccount].balance += entry.debitAmount;
+                }
+                
+                // Update credit account
+                if (accounts[entry.creditAccount]) {
+                    accounts[entry.creditAccount].balance += entry.creditAmount;
+                }
+            });
+            
+            // Get dates for statements
+            const lastEntryDate = journalEntries.reduce((latest, entry) => 
+                new Date(entry.date) > new Date(latest) ? entry.date : latest, 
+                journalEntries[0]?.date || new Date().toISOString().split('T')[0]
+            );
+            
+            // Profit & Loss Statement
+            const revenue = accounts.revenue.balance;
+            const cogs = accounts.cogs.balance;
+            const salariesExpense = accounts.salaries.balance;
+            const rentExpense = accounts.rent.balance;
+            const utilitiesExpense = accounts.utilities.balance;
+            const depreciationExpense = accounts.depreciation.balance;
+            const totalExpenses = salariesExpense + rentExpense + utilitiesExpense + depreciationExpense;
+            const netIncome = revenue - cogs - totalExpenses;
+            
+            document.getElementById('incomeStatementContainer').innerHTML = `
+                <div class="financial-statement" id="incomeStatement">
+                    <div class="statement-header">
+                        <h2>Profit & Loss Statement</h2>
+                        <p id="incomeStatementDate">For the period ended ${lastEntryDate}</p>
+                    </div>
+                    
+                    <div class="statement-section">
+                        <div class="account-row">
+                            <div class="account-name">Revenue</div>
+                            <div class="account-value">${revenue.toFixed(2)}</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Cost of Goods Sold</div>
+                            <div class="account-value">(${cogs.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row statement-total">
+                            <div class="account-name">Gross Profit</div>
+                            <div class="account-value">${(revenue - cogs).toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="statement-section">
+                        <h3>Operating Expenses</h3>
+                        <div class="account-row">
+                            <div class="account-name">Salaries Expense</div>
+                            <div class="account-value">(${salariesExpense.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Rent Expense</div>
+                            <div class="account-value">(${rentExpense.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Utilities Expense</div>
+                            <div class="account-value">(${utilitiesExpense.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Depreciation Expense</div>
+                            <div class="account-value">(${depreciationExpense.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row statement-total">
+                            <div class="account-name">Total Expenses</div>
+                            <div class="account-value">(${totalExpenses.toFixed(2)})</div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-row statement-total">
+                        <div class="account-name">Net Income</div>
+                        <div class="account-value">${netIncome.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Balance Sheet
+            const cash = accounts.cash.balance;
+            const accountsReceivable = accounts.accounts_receivable.balance;
+            const inventory = accounts.inventory.balance;
+            const equipment = accounts.equipment.balance;
+            const totalAssets = cash + accountsReceivable + inventory + equipment;
+            
+            const accountsPayable = accounts.accounts_payable.balance;
+            const loansPayable = accounts.loans_payable.balance;
+            const totalLiabilities = accountsPayable + loansPayable;
+            
+            const equity = accounts.equity.balance;
+            const revaluationReserve = accounts.revaluation_reserve.balance;
+            const totalEquity = equity + netIncome + revaluationReserve;
+            const totalLiabilitiesEquity = totalLiabilities + totalEquity;
+            
+            document.getElementById('balanceSheetContainer').innerHTML = `
+                <div class="financial-statement" id="balanceSheet">
+                    <div class="statement-header">
+                        <h2>Balance Sheet</h2>
+                        <p id="balanceSheetDate">As of ${lastEntryDate}</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div>
+                            <h3>Assets</h3>
+                            <div class="account-row">
+                                <div class="account-name">Cash</div>
+                                <div class="account-value debit">${cash.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Accounts Receivable</div>
+                                <div class="account-value debit">${accountsReceivable.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Inventory</div>
+                                <div class="account-value debit">${inventory.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Equipment</div>
+                                <div class="account-value debit">${equipment.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row statement-total">
+                                <div class="account-name">Total Assets</div>
+                                <div class="account-value debit">${totalAssets.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3>Liabilities & Equity</h3>
+                            <div class="account-row">
+                                <div class="account-name">Accounts Payable</div>
+                                <div class="account-value credit">${accountsPayable.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Loans Payable</div>
+                                <div class="account-value credit">${loansPayable.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row statement-total">
+                                <div class="account-name">Total Liabilities</div>
+                                <div class="account-value credit">${totalLiabilities.toFixed(2)}</div>
+                            </div>
+                            
+                            <div class="account-row" style="margin-top: 20px;">
+                                <div class="account-name">Owner's Equity</div>
+                                <div class="account-value credit">${equity.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Retained Earnings</div>
+                                <div class="account-value credit">${netIncome.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row">
+                                <div class="account-name">Revaluation Reserve</div>
+                                <div class="account-value credit">${revaluationReserve.toFixed(2)}</div>
+                            </div>
+                            <div class="account-row statement-total">
+                                <div class="account-name">Total Equity</div>
+                                <div class="account-value credit">${totalEquity.toFixed(2)}</div>
+                            </div>
+                            
+                            <div class="account-row statement-total">
+                                <div class="account-name">Total Liabilities & Equity</div>
+                                <div class="account-value credit">${totalLiabilitiesEquity.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Generate trading account
+        function generateTradingAccount() {
+            // Reset account balances
+            Object.keys(accounts).forEach(account => {
+                accounts[account].balance = 0;
+            });
+            
+            // Process journal entries to calculate account balances
+            journalEntries.forEach(entry => {
+                // Update debit account
+                if (accounts[entry.debitAccount]) {
+                    accounts[entry.debitAccount].balance += entry.debitAmount;
+                }
+                
+                // Update credit account
+                if (accounts[entry.creditAccount]) {
+                    accounts[entry.creditAccount].balance += entry.creditAmount;
+                }
+            });
+            
+            // Get dates for statements
+            const lastEntryDate = journalEntries.reduce((latest, entry) => 
+                new Date(entry.date) > new Date(latest) ? entry.date : latest, 
+                journalEntries[0]?.date || new Date().toISOString().split('T')[0]
+            );
+            
+            // Trading Account
+            const revenue = accounts.revenue.balance;
+            const cogs = accounts.cogs.balance;
+            const openingInventory = accounts.inventory.balance * 0.3; // Assume 30% of current inventory as opening
+            const purchases = accounts.inventory.balance - openingInventory;
+            const closingInventory = accounts.inventory.balance;
+            
+            const grossProfit = revenue - cogs;
+            
+            document.getElementById('tradingAccountContainer').innerHTML = `
+                <div class="trading-account">
+                    <div class="trading-header">
+                        <h2>Trading Account</h2>
+                        <p id="tradingAccountDate">For the period ended ${lastEntryDate}</p>
+                    </div>
+                    
+                    <div class="statement-section">
+                        <div class="trading-row">
+                            <div class="trading-name">Opening Inventory</div>
+                            <div class="trading-value">${openingInventory.toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row">
+                            <div class="trading-name">Add: Purchases</div>
+                            <div class="trading-value">${purchases.toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row">
+                            <div class="trading-name">Cost of Goods Available for Sale</div>
+                            <div class="trading-value">${(openingInventory + purchases).toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row">
+                            <div class="trading-name">Less: Closing Inventory</div>
+                            <div class="trading-value">(${closingInventory.toFixed(2)})</div>
+                        </div>
+                        <div class="trading-row statement-total">
+                            <div class="trading-name">Cost of Goods Sold</div>
+                            <div class="trading-value">${cogs.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="statement-section">
+                        <div class="trading-row">
+                            <div class="trading-name">Sales</div>
+                            <div class="trading-value">${revenue.toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row">
+                            <div class="trading-name">Less: Cost of Goods Sold</div>
+                            <div class="trading-value">(${cogs.toFixed(2)})</div>
+                        </div>
+                        <div class="trading-row statement-total">
+                            <div class="trading-name">Gross Profit</div>
+                            <div class="trading-value">${grossProfit.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="statement-section">
+                        <h3>Summary</h3>
+                        <div class="trading-row">
+                            <div class="trading-name">Net Sales</div>
+                            <div class="trading-value">${revenue.toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row">
+                            <div class="trading-name">Cost of Goods Sold</div>
+                            <div class="trading-value">${cogs.toFixed(2)}</div>
+                        </div>
+                        <div class="trading-row statement-total">
+                            <div class="trading-name">Gross Profit Margin</div>
+                            <div class="trading-value">${(grossProfit / revenue * 100).toFixed(2)}%</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Generate cash flow statement
+        function generateCashFlowStatement() {
+            // Reset account balances
+            Object.keys(accounts).forEach(account => {
+                accounts[account].balance = 0;
+            });
+            
+            // Process journal entries to calculate account balances
+            journalEntries.forEach(entry => {
+                // Update debit account
+                if (accounts[entry.debitAccount]) {
+                    accounts[entry.debitAccount].balance += entry.debitAmount;
+                }
+                
+                // Update credit account
+                if (accounts[entry.creditAccount]) {
+                    accounts[entry.creditAccount].balance += entry.creditAmount;
+                }
+            });
+            
+            // Get dates for statements
+            const lastEntryDate = journalEntries.reduce((latest, entry) => 
+                new Date(entry.date) > new Date(latest) ? entry.date : latest, 
+                journalEntries[0]?.date || new Date().toISOString().split('T')[0]
+            );
+            
+            // Calculate cash flows
+            const netIncome = accounts.revenue.balance - accounts.cogs.balance - 
+                (accounts.salaries.balance + accounts.rent.balance + 
+                 accounts.utilities.balance + accounts.depreciation.balance);
+            
+            const operatingActivities = netIncome + accounts.depreciation.balance;
+            const investingActivities = -accounts.equipment.balance;
+            const financingActivities = accounts.loans_payable.balance + accounts.equity.balance;
+            
+            const netCashFlow = operatingActivities + investingActivities + financingActivities;
+            const beginningCash = 0; // Assuming starting from zero
+            const endingCash = accounts.cash.balance;
+            
+            document.getElementById('cashFlowContainer').innerHTML = `
+                <div class="financial-statement">
+                    <div class="statement-header">
+                        <h2>Cash Flow Statement</h2>
+                        <p id="cashFlowDate">For the period ended ${lastEntryDate}</p>
+                    </div>
+                    
+                    <div class="cash-flow-section">
+                        <h3>Cash Flows from Operating Activities</h3>
+                        <div class="account-row">
+                            <div class="account-name">Net Income</div>
+                            <div class="account-value">${netIncome.toFixed(2)}</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Adjustments for non-cash items:</div>
+                            <div class="account-value"></div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name" style="padding-left: 20px;">Depreciation Expense</div>
+                            <div class="account-value">${accounts.depreciation.balance.toFixed(2)}</div>
+                        </div>
+                        <div class="account-row statement-total">
+                            <div class="account-name">Net Cash from Operating Activities</div>
+                            <div class="account-value">${operatingActivities.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cash-flow-section">
+                        <h3>Cash Flows from Investing Activities</h3>
+                        <div class="account-row">
+                            <div class="account-name">Purchase of Equipment</div>
+                            <div class="account-value">(${accounts.equipment.balance.toFixed(2)})</div>
+                        </div>
+                        <div class="account-row statement-total">
+                            <div class="account-name">Net Cash from Investing Activities</div>
+                            <div class="account-value">${investingActivities.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cash-flow-section">
+                        <h3>Cash Flows from Financing Activities</h3>
+                        <div class="account-row">
+                            <div class="account-name">Proceeds from Loans</div>
+                            <div class="account-value">${accounts.loans_payable.balance.toFixed(2)}</div>
+                        </div>
+                        <div class="account-row">
+                            <div class="account-name">Owner Investments</div>
+                            <div class="account-value">${accounts.equity.balance.toFixed(2)}</div>
+                        </div>
+                        <div class="account-row statement-total">
+                            <div class="account-name">Net Cash from Financing Activities</div>
+                            <div class="account-value">${financingActivities.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-row statement-total">
+                        <div class="account-name">Net Increase in Cash</div>
+                        <div class="account-value">${netCashFlow.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="account-row">
+                        <div class="account-name">Cash at Beginning of Period</div>
+                        <div class="account-value">${beginningCash.toFixed(2)}</div>
+                    </div>
+                    
+                    <div class="account-row statement-total">
+                        <div class="account-name">Cash at End of Period</div>
+                        <div class="account-value">${endingCash.toFixed(2)}</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Initialize the application
+        function initApp() {
+            // Set default date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('entryDate').value = today;
+            document.getElementById('revalDate').value = today;
+            
+            // Update UI with existing data
+            updateJournalEntriesTable();
+            updateLedgerTable();
+            updateRevaluationTable();
+        }
+        
+        // Start the application
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
