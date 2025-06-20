@@ -2493,5 +2493,21 @@
         // Start the application
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
+    <style>
+/* Add this new CSS rule at the end of your existing styles */
+#revalTable {
+    min-width: 800px; /* Ensures table has minimum width */
+    width: 100%; /* Fills container width */
+}
+
+/* Modify the existing .table-container specifically for revaluation */
+#revaluation-tab .table-container {
+    overflow-x: auto; /* Horizontal scrolling */
+    max-height: 450px;
+    margin: 0 -10px;
+    padding: 0 10px;
+    border-radius: 6px;
+}
+</style>
 </body>
 </html>
